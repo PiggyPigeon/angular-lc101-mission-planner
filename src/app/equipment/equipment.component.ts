@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EquipmentComponent implements OnInit {
   itemBeingEdited: string = null;
+  // editingItem: boolean = false;
   equipment = [] = ['Habitat dome', 'Drones', 'Food containers', 'Oxygen tanks'];
   inToolKit: boolean = false;
 
@@ -29,10 +30,6 @@ export class EquipmentComponent implements OnInit {
     this.inToolKit = false;
   }
 
-
-
-
-
   edit(item: string) {
     this.itemBeingEdited = item;
  }
@@ -42,9 +39,12 @@ export class EquipmentComponent implements OnInit {
   this.equipment.splice(index, 1);
 }
 
-save(item: string) {
-  this.equipment.push(item);
-  // this.itemBeingEdited = null;
+save(newItem: string) {
+  let ix = this.equipment.indexOf(this.itemBeingEdited);
+  this.equipment[ix] = newItem;
+  this.itemBeingEdited = null;
 }
+
+
 
 }
