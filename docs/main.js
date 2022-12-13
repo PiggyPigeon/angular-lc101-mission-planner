@@ -147,7 +147,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h3>Crew</h3>\n<ul>\n   <li *ngFor=\"let member of crew\">\n\n      <span *ngIf=\"memberBeingEdited !== member; else elseBlock\">\n         <!-- display state of member -->\n         <span (click)=\"edit(member)\" class=\"editable-text\">{{member.name}}</span>\n         <span *ngIf=\"member.firstMission\">\n            - 1st\n         </span>\n         <button (click)=\"remove(member)\">remove</button>\n      </span>\n\n      <ng-template #elseBlock>\n         <!-- edit state of member -->\n         <input #updatedName (keyup.enter)=\"save(updatedName.value, member)\" value=\"{{member.name}}\"/>\n         <button (click)=\"save(updatedName.value, member)\">save</button>\n      </ng-template>\n\n   </li>\n</ul>\n<input #name (keyup.enter)=\"add(name.value, firstMission.checked); name.value = ''\" type=\"text\"/>\n<label>First mission<input #firstMission type=\"checkbox\"/></label>\n<button (click)=\"add(name.value, firstMission.checked); name.value = ''\">Add</button>"
+module.exports = "<h3>Crew</h3>\n<ul>\n   <li *ngFor=\"let member of crew\">\n\n      <span *ngIf=\"memberBeingEdited !== member; else elseBlock\">\n         <!-- display state of member -->\n         <span (click)=\"edit(member)\" class=\"editable-text\">{{member.name}}</span>\n         <span *ngIf=\"member.firstMission\">\n            - 1st\n         </span>\n         <button (click)=\"remove(member)\">remove</button>\n      </span>\n\n      <ng-template #elseBlock>\n         <!-- edit state of member -->\n         <input #updatedName (keyup.enter)=\"save(updatedName.value, member)\" value=\"{{member.name}}\"/>\n         <button (click)=\"save(updatedName.value, member)\">save</button>\n      </ng-template>\n\n   </li>\n</ul>\n<input #name (keyup.enter)=\"add(name.value, firstMission.checked); name.value = ''\" type=\"text\" placeholder=\"Add more crew\"/>\n<label>First mission<input #firstMission type=\"checkbox\"/></label>\n<button (click)=\"add(name.value, firstMission.checked); name.value = ''\">Add</button>"
 
 /***/ }),
 
@@ -199,7 +199,7 @@ var CrewComponent = /** @class */ (function () {
     };
     CrewComponent.prototype.save = function (name, member) {
         member['name'] = name;
-        this.memberBeingEdited = null;
+        // this.memberBeingEdited = null;
     };
     CrewComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -234,7 +234,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h3>Equipment</h3>\n<ul>\n  <li>Habitat dome</li>\n  <li>Drones</li>\n  <li>Food containers</li>\n  <li>Oxygen tanks</li>\n</ul>\n"
+module.exports = "<h3>Equipment</h3>\n<ul>\n  <li *ngFor=\"let item of equipment\">\n    <span *ngIf=\"itemBeingEdited !== item; else elseBlock\">\n      <span (click)=\"edit(item)\" class=\"editable-text\">{{item}}</span>\n        <button (click)=\"remove(item)\">remove</button>\n    </span>\n\n    <ng-template #elseBlock>\n      <input #updatedEquipment (keyup.enter)=\"save(updatedEquipment.value)\" value=\"{{item}}\"/>\n      <button (click)=\"save(updatedEquipment.value)\">save</button>\n    </ng-template>\n  </li>\n</ul>\n\n\n<input #newItem (keyup.enter)=\"add(newItem.value); newItem.value = ''\" type=\"text\" placeholder=\"add a new item\"/>\n<button (click)=\"add(newItem.value); newItem.value = ''\">Add</button>\n\n<!-- \n<h3>Crew</h3>\n<ul>\n   <li *ngFor=\"let member of crew\">\n\n      <span *ngIf=\"memberBeingEdited !== member; else elseBlock\">\n         \n         <span (click)=\"edit(member)\" class=\"editable-text\">{{member.name}}</span>\n         <span *ngIf=\"member.firstMission\">\n            - 1st\n         </span>\n         <button (click)=\"remove(member)\">remove</button>\n      </span>\n\n      <ng-template #elseBlock>\n         \n         <input #updatedName (keyup.enter)=\"save(updatedName.value, member)\" value=\"{{member.name}}\"/>\n         <button (click)=\"save(updatedName.value, member)\">save</button>\n      </ng-template>\n\n   </li>\n</ul>\n<input #name (keyup.enter)=\"add(name.value, firstMission.checked); name.value = ''\" type=\"text\"/>\n<label>First mission<input #firstMission type=\"checkbox\"/></label>\n<button (click)=\"add(name.value, firstMission.checked); name.value = ''\">Add</button> -->"
 
 /***/ }),
 
@@ -254,8 +254,34 @@ __webpack_require__.r(__webpack_exports__);
 
 var EquipmentComponent = /** @class */ (function () {
     function EquipmentComponent() {
+        this.itemBeingEdited = null;
+        this.equipment = ['Habitat dome', 'Drones', 'Food containers', 'Oxygen tanks'];
+        this.inToolKit = false;
     }
     EquipmentComponent.prototype.ngOnInit = function () {
+    };
+    EquipmentComponent.prototype.add = function (newItem) {
+        for (var i = 0; i < this.equipment.length; i++) {
+            if (this.equipment[i].toLowerCase() === newItem.toLowerCase()) {
+                this.inToolKit = true;
+                alert("You already have this.");
+            }
+        }
+        if (!this.inToolKit && newItem !== "") {
+            this.equipment.push(newItem);
+        }
+        this.inToolKit = false;
+    };
+    EquipmentComponent.prototype.edit = function (item) {
+        this.itemBeingEdited = item;
+    };
+    EquipmentComponent.prototype.remove = function (item) {
+        var index = this.equipment.indexOf(item);
+        this.equipment.splice(index, 1);
+    };
+    EquipmentComponent.prototype.save = function (item) {
+        this.equipment.push(item);
+        // this.itemBeingEdited = null;
     };
     EquipmentComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
