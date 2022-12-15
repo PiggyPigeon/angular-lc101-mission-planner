@@ -6,45 +6,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./equipment.component.css']
 })
 export class EquipmentComponent implements OnInit {
-  itemBeingEdited: string = null;
-  // editingItem: boolean = false;
-  equipment = [] = ['Habitat dome', 'Drones', 'Food containers', 'Oxygen tanks'];
-  inToolKit: boolean = false;
+   equipmentItems: object[] = [
+       {name: 'Duct Tape', mass: 0.5},
+       {name: 'Space Camera', mass: 20},
+       {name: 'Food', mass: 150},
+       {name: 'Oxygen Tanks', mass: 400},
+       {name: 'AE-35 Unit', mass: 5},
+       {name: 'ISS Supplies', mass: 800},
+       {name: 'Water', mass: 250},
+       {name: 'Satellite', mass: 1200},
+       {name: 'R2 Unit', mass: 32}
+   ];
+   cargoHold: object[] = [];
+   cargoMass: number = 0;
+   maximumAllowedMass: number = 2000;
+   maxItems: number = 10;
 
-  constructor() { }
+   constructor() { }
 
-  ngOnInit() {
-  }
-  add(newItem: string) {
-    for (let i=0; i < this.equipment.length; i++) {
-        if(this.equipment[i].toLowerCase() === newItem.toLowerCase()) {
-            this.inToolKit = true;
-            alert("You already have this.")
-        }  
-    }
+   ngOnInit() { }
+
+   // Code your addItem function here:
    
-    if (!this.inToolKit && newItem !== "") {
-        this.equipment.push(newItem);
-    }
-    
-    this.inToolKit = false;
-  }
-
-  edit(item: string) {
-    this.itemBeingEdited = item;
- }
-
- remove(item: string) {
-  let index = this.equipment.indexOf(item);
-  this.equipment.splice(index, 1);
-}
-
-save(newItem: string) {
-  let ix = this.equipment.indexOf(this.itemBeingEdited);
-  this.equipment[ix] = newItem;
-  this.itemBeingEdited = null;
-}
-
-
-
 }
